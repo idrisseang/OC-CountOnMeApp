@@ -40,4 +40,14 @@ final class CalculatorTestCase: XCTestCase {
         XCTAssertEqual(result, 50)
     }
 
+    func testGivenLeftOperandIs10_WhenDividingBy2_ThenResultShouldBe5() {
+
+        let result = calculator.execute(
+            with: .divide,
+            leftOperand: 10,
+            rightOperand: 2)
+
+        XCTAssertEqual(result, 5)
+    }
+
 }
