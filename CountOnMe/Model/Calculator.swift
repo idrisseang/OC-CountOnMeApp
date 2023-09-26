@@ -31,6 +31,7 @@ class Calculator {
         case add = "+"
         case subtract = "-"
         case multiply = "*"
+        case divide = "/"
     }
 
     func execute(with operation: Calculator.Operations, leftOperand: Int, rightOperand: Int) -> Int {
@@ -41,6 +42,8 @@ class Calculator {
             return leftOperand - rightOperand
         case .multiply:
             return leftOperand * rightOperand
+        case .divide:
+            return leftOperand / rightOperand
         }
     }
 }
