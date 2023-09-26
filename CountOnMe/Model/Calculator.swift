@@ -31,4 +31,13 @@ class Calculator {
         case add = "+"
         case subtract = "-"
     }
+    
+    func execute(with operation: Calculator.Operations, leftOperand: Int, rightOperand: Int) -> Int {
+        switch operation {
+        case .add:
+            return leftOperand + rightOperand
+        case .subtract:
+            return leftOperand - rightOperand
+        }
+    }
 }
