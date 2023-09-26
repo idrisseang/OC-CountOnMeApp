@@ -12,7 +12,7 @@ class Calculator {
 
     // Error check computed variables
     func expressionIsCorrect(elements: [String] ) -> Bool {
-        return elements.last != "+" && elements.last != "-"
+        return Operations.allCases.allSatisfy { elements.last != $0.rawValue }
     }
 
     func expressionHaveEnoughElement(elements: [String] ) -> Bool {
@@ -20,14 +20,14 @@ class Calculator {
     }
 
     func canAddOperator(elements: [String] ) -> Bool {
-        return elements.last != "+" && elements.last != "-"
+        return Operations.allCases.allSatisfy { elements.last != $0.rawValue }
     }
 
     func expressionHaveResult(calculText: String) -> Bool {
         return calculText.firstIndex(of: "=") != nil
     }
 
-    enum Operations: String {
+    enum Operations: String, CaseIterable {
         case add = "+"
         case subtract = "-"
         case multiply = "*"
