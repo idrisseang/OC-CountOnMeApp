@@ -58,6 +58,14 @@ final class CalculatorTestCase: XCTestCase {
 
         XCTAssertNil(result)
     }
-    
+
+    /// Test if an expression is not correct
+
+    func testGivenLastElementIsPlus_WhenCheckingIfExpressionIsCorrect_ThenResultShouldBeFalse() {
+
+        let elements: [String] = ["5", "0", "+"]
+
+        XCTAssertFalse(calculator.expressionIsCorrect(elements: elements))
+    }
 
 }
