@@ -30,4 +30,14 @@ final class CalculatorTestCase: XCTestCase {
         XCTAssertEqual(result, 8)
     }
 
+    func testGivenLeftOperandIs10_WhenMultiplyingBy5_ThenResultShouldBe50() {
+
+        let result = calculator.execute(
+            with: .multiply,
+            leftOperand: 10,
+            rightOperand: 5)
+
+        XCTAssertEqual(result, 50)
+    }
+
 }
