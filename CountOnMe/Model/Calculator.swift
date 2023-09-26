@@ -30,6 +30,7 @@ class Calculator {
     enum Operations: String {
         case add = "+"
         case subtract = "-"
+        case multiply = "*"
     }
 
     func execute(with operation: Calculator.Operations, leftOperand: Int, rightOperand: Int) -> Int {
@@ -38,6 +39,8 @@ class Calculator {
             return leftOperand + rightOperand
         case .subtract:
             return leftOperand - rightOperand
+        case .multiply:
+            return leftOperand * rightOperand
         }
     }
 }
