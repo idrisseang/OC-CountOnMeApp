@@ -10,4 +10,25 @@ import Foundation
 
 class Calculator {
     
+    // Error check computed variables
+    func expressionIsCorrect(elements: [String] ) -> Bool {
+        return elements.last != "+" && elements.last != "-"
+    }
+    
+    func expressionHaveEnoughElement(elements: [String] ) -> Bool {
+        return elements.count >= 3
+    }
+    
+    func canAddOperator(elements: [String] ) -> Bool {
+        return elements.last != "+" && elements.last != "-"
+    }
+    
+    func expressionHaveResult(calculText: String) -> Bool {
+        return calculText.firstIndex(of: "=") != nil
+    }
+    
+    enum Operations: String {
+        case add = "+"
+        case subtract = "-"
+    }
 }
