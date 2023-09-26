@@ -240,7 +240,7 @@
                                                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         </state>
                                                                         <connections>
-                                                                            <action selector="tappedAdditionButton:" destination="eqK-jh-KKu" eventType="touchUpInside" id="V0J-eg-vQK"/>
+                                                                            <action selector="tappedOperandButton:" destination="eqK-jh-KKu" eventType="touchUpInside" id="EKU-Lh-FXb"/>
                                                                         </connections>
                                                                     </button>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3zr-HC-0N9">
@@ -255,7 +255,7 @@
                                                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         </state>
                                                                         <connections>
-                                                                            <action selector="tappedSubstractionButton:" destination="eqK-jh-KKu" eventType="touchUpInside" id="KVX-AF-NVM"/>
+                                                                            <action selector="tappedOperandButton:" destination="eqK-jh-KKu" eventType="touchUpInside" id="VrT-g7-Exb"/>
                                                                         </connections>
                                                                     </button>
                                                                 </subviews>
@@ -275,7 +275,7 @@
                                                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         </state>
                                                                         <connections>
-                                                                            <action selector="tappedAdditionButton:" destination="eqK-jh-KKu" eventType="touchUpInside" id="APU-wT-BCE"/>
+                                                                            <action selector="tappedOperandButton:" destination="eqK-jh-KKu" eventType="touchUpInside" id="6VA-4l-5u6"/>
                                                                         </connections>
                                                                     </button>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NdB-R6-877">
@@ -290,7 +290,7 @@
                                                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         </state>
                                                                         <connections>
-                                                                            <action selector="tappedAdditionButton:" destination="eqK-jh-KKu" eventType="touchUpInside" id="A2Z-nm-UhW"/>
+                                                                            <action selector="tappedOperandButton:" destination="eqK-jh-KKu" eventType="touchUpInside" id="7Hc-Ds-4Fc"/>
                                                                         </connections>
                                                                     </button>
                                                                 </subviews>

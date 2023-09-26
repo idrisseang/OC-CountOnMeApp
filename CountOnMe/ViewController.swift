@@ -37,23 +37,15 @@ class ViewController: UIViewController {
         textView.text.append(numberText)
     }
 
-    @IBAction func tappedAdditionButton(_ sender: UIButton) {
+    @IBAction func tappedOperandButton(_ sender: UIButton) {
         if self.calculator.canAddOperator(elements: self.elements) {
-            textView.text.append(" + ")
+            if let operand = sender.currentTitle {
+                textView.text.append(" \(operand) ")
+            }
         } else {
         let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
-            alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-            self.present(alertVC, animated: true, completion: nil)
-        }
-    }
-
-    @IBAction func tappedSubstractionButton(_ sender: UIButton) {
-        if self.calculator.canAddOperator(elements: self.elements) {
-            textView.text.append(" - ")
-        } else {
-        let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
-            alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-            self.present(alertVC, animated: true, completion: nil)
+                alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                self.present(alertVC, animated: true)
         }
     }
 
