@@ -50,4 +50,13 @@ final class CalculatorTestCase: XCTestCase {
         XCTAssertEqual(result, 5)
     }
 
+    /// Test division by zero
+
+    func testGivenLeftOperandIs10_WhenDividingByZero_ThenResultShouldBeNil() {
+
+        let result = calculator.execute(with: .divide, leftOperand: 10, rightOperand: 0)
+
+        XCTAssertNil(result)
+    }
+
 }

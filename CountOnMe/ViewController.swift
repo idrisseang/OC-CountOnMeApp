@@ -75,12 +75,22 @@ class ViewController: UIViewController {
                 with: Calculator.Operations(rawValue: operand)!,
                 leftOperand: left,
                 rightOperand: right)
-
-            operationsToReduce = Array(operationsToReduce.dropFirst(3))
-            operationsToReduce.insert("\(result)", at: 0)
+            if result == nil {
+                self.handleDivisionByZero()
+                break
+            } else {
+                operationsToReduce = Array(operationsToReduce.dropFirst(3))
+                operationsToReduce.insert("\(result!)", at: 0)
+                textView.text.append(" = \(operationsToReduce.first!)")
+            }
         }
-
-        textView.text.append(" = \(operationsToReduce.first!)")
     }
 
+    private func handleDivisionByZero() {
+
+        let alertVC = UIAlertController(title: "Erreur", message: "Opération impossible", preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        self.present(alertVC, animated: true, completion: nil)
+        self.textView.text = ""
+    }
 }
