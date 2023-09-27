@@ -93,6 +93,18 @@ final class CalculatorTestCase: XCTestCase {
 
         XCTAssertTrue(calculator.expressionHaveEnoughElement(elements: elements))
     }
-    
+
+    /// Test an expression with random numbers
+
+    func testGivenOperandsAreRandom_WhenAddingThem_ThenResultShouldBeGood() {
+
+        let leftOperand = Int.random(in: 0...20)
+        let rightOperand = Int.random(in: 0...10)
+
+        let resultat = leftOperand + rightOperand
+        let result = calculator.execute(with: .add, leftOperand: leftOperand, rightOperand: rightOperand)
+
+        XCTAssertEqual(result, resultat)
+    }
 
 }
