@@ -11,6 +11,7 @@ import XCTest
 
 final class CalculatorTestCase: XCTestCase {
     var calculator: Calculator!
+    var elements = [String]()
 
     override func setUp() {
         self.calculator = Calculator()
@@ -63,7 +64,7 @@ final class CalculatorTestCase: XCTestCase {
 
     func testGivenLastElementIsPlus_WhenCheckingIfExpressionIsCorrect_ThenResultShouldBeFalse() {
 
-        let elements: [String] = ["5", "0", "+"]
+        self.elements = ["5", "0", "+"]
 
         XCTAssertFalse(calculator.expressionIsCorrect(elements: elements))
     }
@@ -72,9 +73,26 @@ final class CalculatorTestCase: XCTestCase {
 
     func testGivenExpressionIsCorrect_WhenCheckingIfExpressionIsCorrect_ThenShouldBeTrue() {
 
-        let elements: [String] = ["5", "+", "0"]
+        self.elements = ["5", "+", "0"]
 
         XCTAssertTrue(calculator.expressionIsCorrect(elements: elements))
     }
+
+    /// Test if an expression has enough elements
+
+    func testGivenExpressionContains2Elements_WhenCheckingIfEnoughElements_ThenShouldBeFalse() {
+
+        self.elements = ["2", "5"]
+
+        XCTAssertFalse(calculator.expressionHaveEnoughElement(elements: elements))
+    }
+
+    func testGivenExpressionContains3Elements_WhenCheckingIfEnoughElements_ThenShouldBeTrue() {
+
+        self.elements = ["2", "+", "5"]
+
+        XCTAssertTrue(calculator.expressionHaveEnoughElement(elements: elements))
+    }
+    
 
 }
