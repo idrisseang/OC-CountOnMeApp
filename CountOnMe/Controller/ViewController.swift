@@ -62,28 +62,9 @@ class ViewController: UIViewController {
             return self.present(alertVC, animated: true, completion: nil)
         }
 
-        // Create local copy of operations
-        var operationsToReduce = elements
+        let operationsToReduce = self.calculator.calculate(elements: self.elements)
 
-        // Iterate over operations while an operand still here
-        while operationsToReduce.count > 1 {
-            let left = Int(operationsToReduce[0])!
-            let operand = operationsToReduce[1]
-            let right = Int(operationsToReduce[2])!
-
-            let result = self.calculator.execute(
-                with: Calculator.Operations(rawValue: operand)!,
-                leftOperand: left,
-                rightOperand: right)
-            if result == nil {
-                self.handleDivisionByZero()
-                break
-            } else {
-                operationsToReduce = Array(operationsToReduce.dropFirst(3))
-                operationsToReduce.insert("\(result!)", at: 0)
-                textView.text.append(" = \(operationsToReduce.first!)")
-            }
-        }
+        textView.text.append(" = \(operationsToReduce.first!)")
     }
 
     private func handleDivisionByZero() {
