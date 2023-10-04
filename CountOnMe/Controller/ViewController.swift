@@ -12,16 +12,21 @@ class ViewController: UIViewController {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet var numberButtons: [UIButton]!
 
+    /// Allows to retrieve the elements present in the textView
     var elements: [String] {
         return textView.text.split(separator: " ").map { "\($0)" }
     }
-
+    /// Variable that links the model to the controller
     private var calculator = Calculator()
 
     // View Life cycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+    }
+
+    /// Clears all content entered in the textView using the AC button
+    @IBAction func tappedEraseButton(_ sender: Any) {
+        self.textView.text = ""
     }
 
     // View actions
@@ -43,35 +48,37 @@ class ViewController: UIViewController {
                 textView.text.append(" \(operand) ")
             }
         } else {
-        let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
-                alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-                self.present(alertVC, animated: true)
+            return self.createCustomAlert(title: "Oops", message: "An operator is already placed")
         }
     }
 
     @IBAction func tappedEqualButton(_ sender: UIButton) {
         guard self.calculator.expressionIsCorrect(elements: self.elements) else {
-    let alertVC = UIAlertController(title: "Zéro!", message: "Entrez une expression correcte !", preferredStyle: .alert)
-            alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-            return self.present(alertVC, animated: true, completion: nil)
+            return self.createCustomAlert(title: "Oops", message: "Enter a correct expression")
         }
 
         guard self.calculator.expressionHaveEnoughElement(elements: self.elements) else {
-        let alertVC = UIAlertController(title: "Zéro!", message: "Démarrez un nouveau calcul !", preferredStyle: .alert)
-            alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-            return self.present(alertVC, animated: true, completion: nil)
+            return self.createCustomAlert(title: "Oops", message: "Start a new calculation")
         }
 
+        /// Get the array containing the result from the model
         let operationsToReduce = self.calculator.calculate(elements: self.elements)
+        /// Check if this result exists
+        if let resultToDisplay = operationsToReduce?.first {
+            textView.text.append(" = \(resultToDisplay)") /// If yes, add the result to the textView
+        } else {
+            self.handleDivisionByZero() /// Otherwise, handle division by zero
+        }
+    }
 
-        textView.text.append(" = \(operationsToReduce.first!)")
+    private func createCustomAlert(title: String, message: String) {
+        let alertVC = UIAlertController(title: "\(title) ⚠️", message: "\(message).", preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        return self.present(alertVC, animated: true, completion: nil)
     }
 
     private func handleDivisionByZero() {
-
-        let alertVC = UIAlertController(title: "Erreur", message: "Opération impossible", preferredStyle: .alert)
-        alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-        self.present(alertVC, animated: true, completion: nil)
-        self.textView.text = ""
+        self.createCustomAlert(title: "Error", message: "Operation not possible")
+        self.textView.text = "Error"
     }
 }

@@ -17,6 +17,8 @@ final class CalculatorTestCase: XCTestCase {
         self.calculator = Calculator()
     }
 
+    // TEST SIMPLE CALCULATIONS WITHOUT PRIORITIES
+
     func testGivenLeftOperandIs10_WhenAdding2_ThenResultShouldBe12() {
 
         let result = calculator.execute(with: .add, leftOperand: 10, rightOperand: 2)
@@ -98,13 +100,62 @@ final class CalculatorTestCase: XCTestCase {
 
     func testGivenOperandsAreRandom_WhenAddingThem_ThenResultShouldBeGood() {
 
-        let leftOperand = Int.random(in: 0...20)
-        let rightOperand = Int.random(in: 0...10)
+        let leftOperand = Double.random(in: 0...20)
+        let rightOperand = Double.random(in: 0...10)
 
         let resultat = leftOperand + rightOperand
         let result = calculator.execute(with: .add, leftOperand: leftOperand, rightOperand: rightOperand)
 
         XCTAssertEqual(result, resultat)
+    }
+
+    /// Test a division with a decimal result
+    func testGivenOperandsAre5And2_ByDividing5By2_ThenResultShouldBe2Point50() {
+
+        let result = calculator.execute(with: .divide, leftOperand: 5, rightOperand: 2)
+        guard let result else {
+            return
+        }
+        XCTAssertEqual(calculator.roundResult(result), "2.50")
+    }
+
+    /// Test if we can add an operator in expression
+
+    func testCheckIfWeCanAddAnOperator() {
+
+        self.elements = ["24", "+"]
+
+        XCTAssertFalse(self.calculator.canAddOperator(elements: self.elements))
+
+    }
+
+    /// Tests expressions with priorities
+
+    func testGivenElementsContainsPriorities_WhenTestingCalculate_ThenResultShouldBeRight() {
+
+        self.elements = ["5", "*", "5", "+", "10", "÷", "2", "*", "8", "-", "2"]
+
+        let result = calculator.calculate(elements: self.elements)?.first
+
+        if let result {
+            XCTAssertEqual(result, "63")
+        }
+    }
+
+    func testGivenElementsAre5Times8DividedBy25_WhenTestingCalculateFunc_ThenResultShouldBeRight() {
+
+        self.elements = ["5", "*", "8", "÷", "25"]
+
+        if let result = calculator.calculate(elements: self.elements)?.first {
+            XCTAssertEqual(result, "1.60")
+        }
+    }
+
+    func testNilResultWithCalculate() {
+
+        self.elements = ["4", "÷", "0"]
+
+        XCTAssertEqual(calculator.calculate(elements: self.elements)?.first!, nil)
     }
 
 }
