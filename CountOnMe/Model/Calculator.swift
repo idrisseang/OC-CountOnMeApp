@@ -15,22 +15,27 @@ class Calculator {
     /// Check if the entered expression is correct or not
     /// - Parameter elements: the array containing elements of the expression
     /// - Returns: true or false based on the condition
-    func expressionIsCorrect(elements: [String] ) -> Bool {
-        return Operations.allCases.allSatisfy { elements.last != $0.rawValue }
+    func expressionIsCorrect(elements: [String] ) -> (Bool, String) {
+        if Operations.allCases.allSatisfy({ elements.last != $0.rawValue }) {
+            return (true, "")
+        } else {
+            return (false, "Enter a correct expression")
+        }
     }
 
     /// Check if the expression has enough elements, at least 3 (left, sign, right)
     /// - Parameter elements: the array containing elements of the expression
     /// - Returns: true or false based on the condition
-    func expressionHaveEnoughElement(elements: [String] ) -> Bool {
-        return elements.count >= 3
+    func expressionHaveEnoughElement(elements: [String] ) -> (Bool, String) {
+        return elements.count >= 3 ? (true, "") : (false, "Not enough elements")
     }
 
     /// Check if we can add an operator to the current expression
     /// - Parameter elements: the array containing elements of the expression
     /// - Returns: true if the current expression does not end with an operator, false otherwise
-    func canAddOperator(elements: [String] ) -> Bool {
-        return Operations.allCases.allSatisfy { elements.last != $0.rawValue }
+    func canAddOperator(elements: [String] ) -> (Bool, String) {
+        return Operations.allCases.allSatisfy { elements.last != $0.rawValue } ? (true, "") :
+        (false, "An operator is already placed")
     }
 
     /// Check if an expression has a result
@@ -119,7 +124,7 @@ class Calculator {
     /// - Parameter elements: the array containing elements of the expression
     /// - Returns: an array containing the result element
 
-    func calculate(elements: [String] ) -> [String]? {
+    func calculate(elements: [String] ) -> ([String]?, String) {
         /// Create a local copy of operations
         /// Assign this copy the value of the array already sorted with priorities
         var operationsToReduce = self.setUpCalculPriorities(elements: elements)
@@ -135,7 +140,7 @@ class Calculator {
                 /// If the cast works, we try to get the operation sign
 
                 let operand = Calculator.Operations(rawValue: operationsToReduce[1])
-                guard let operand else { return [] }
+                guard let operand else { return ([], "") }
 
                 /// Once we have all three elements, we perform the operation and store it in a result variable
 
@@ -143,28 +148,30 @@ class Calculator {
                     with: operand,
                     leftOperand: leftOperand,
                     rightOperand: rightOperand)
-
                 /// We "remove" the first three elements from the array
                 operationsToReduce = Array(operationsToReduce.dropFirst(3))
                 if let result { /// if we have a result...
-                    if operand == .divide { /// if the operation sign was division, we format the result
-                        operationsToReduce.insert("\(String(format: "%.2F", result))", at: 0)
-                    } else { /// otherwise, we round it here with roundResult
-                        operationsToReduce.insert("\(roundResult(result))", at: 0)
-                    }
+                    operationsToReduce.insert("\(roundResult(result))", at: 0)
                     /// Insert the result at the beginning of the array
                 }
             }
         }
         if let resultToDisplay = operationsToReduce.first {
-            return ["\(resultToDisplay)"]
+            return (["\(resultToDisplay)"], "")
         } else {
-            return nil
+            return (nil, "Operation impossible")
         }
         /// If we have a result here, return it; otherwise, return nil
     }
 
     func roundResult(_ result: Double) -> String {
-        result.truncatingRemainder(dividingBy: 1.0) == 0.0 ? "\(Int(result))" : "\(String(format: "%.2F", result))"
+
+        if result.truncatingRemainder(dividingBy: 1) == 0.0 && result < Double(Int.max) {
+            return "\(String(format: "%.0F", result))"
+        } else if result.truncatingRemainder(dividingBy: 1) == 0.0 && result > Double(Int.max) {
+            return "\(result)"
+        } else {
+            return "\(String(format: "%.2F", result))"
+        }
     }
 }

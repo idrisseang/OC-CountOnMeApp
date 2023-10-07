@@ -68,7 +68,9 @@ final class CalculatorTestCase: XCTestCase {
 
         self.elements = ["5", "0", "+"]
 
-        XCTAssertFalse(calculator.expressionIsCorrect(elements: elements))
+        let (expressionIsCorrect, _) = calculator.expressionIsCorrect(elements: elements)
+
+        XCTAssertFalse(expressionIsCorrect)
     }
 
     /// Test if an expression is correct
@@ -77,7 +79,9 @@ final class CalculatorTestCase: XCTestCase {
 
         self.elements = ["5", "+", "0"]
 
-        XCTAssertTrue(calculator.expressionIsCorrect(elements: elements))
+        let (expressionIsCorrect, _) = calculator.expressionIsCorrect(elements: elements)
+
+        XCTAssertTrue(expressionIsCorrect)
     }
 
     /// Test if an expression has enough elements
@@ -86,14 +90,18 @@ final class CalculatorTestCase: XCTestCase {
 
         self.elements = ["2", "5"]
 
-        XCTAssertFalse(calculator.expressionHaveEnoughElement(elements: elements))
+        let (expressionHasEnoughElement, _) = calculator.expressionHaveEnoughElement(elements: self.elements)
+
+        XCTAssertFalse(expressionHasEnoughElement)
     }
 
     func testGivenExpressionContains3Elements_WhenCheckingIfEnoughElements_ThenShouldBeTrue() {
 
         self.elements = ["2", "+", "5"]
 
-        XCTAssertTrue(calculator.expressionHaveEnoughElement(elements: elements))
+        let (expressionHasEnoughElement, _) = calculator.expressionIsCorrect(elements: elements)
+
+        XCTAssertTrue(expressionHasEnoughElement)
     }
 
     /// Test an expression with random numbers
@@ -125,7 +133,9 @@ final class CalculatorTestCase: XCTestCase {
 
         self.elements = ["24", "+"]
 
-        XCTAssertFalse(self.calculator.canAddOperator(elements: self.elements))
+        let (canAddAnOperator, _) = self.calculator.canAddOperator(elements: self.elements)
+
+        XCTAssertFalse(canAddAnOperator)
 
     }
 
@@ -135,7 +145,8 @@ final class CalculatorTestCase: XCTestCase {
 
         self.elements = ["5", "*", "5", "+", "10", "÷", "2", "*", "8", "-", "2"]
 
-        let result = calculator.calculate(elements: self.elements)?.first
+        let (resultContainer, _) = calculator.calculate(elements: self.elements)
+        let result = resultContainer?.first!
 
         if let result {
             XCTAssertEqual(result, "63")
@@ -146,7 +157,10 @@ final class CalculatorTestCase: XCTestCase {
 
         self.elements = ["5", "*", "8", "÷", "25"]
 
-        if let result = calculator.calculate(elements: self.elements)?.first {
+        let (resultContainer, _) = calculator.calculate(elements: self.elements)
+        let result = resultContainer?.first!
+
+        if let result {
             XCTAssertEqual(result, "1.60")
         }
     }
@@ -155,7 +169,27 @@ final class CalculatorTestCase: XCTestCase {
 
         self.elements = ["4", "÷", "0"]
 
-        XCTAssertEqual(calculator.calculate(elements: self.elements)?.first!, nil)
+        let (resultContainer, _) = calculator.calculate(elements: self.elements)
+
+        XCTAssertEqual(resultContainer?.first!, nil)
+    }
+
+    func testOperandIsNil() {
+        self.elements = ["15", "5", "3"]
+
+        let result = calculator.calculate(elements: self.elements)
+
+        XCTAssertTrue(result == ([], ""))
+    }
+
+    func testCalculationWithInsaneNumbers() {
+
+        self.elements = ["999999999999", "*", "999999999999"]
+
+        let (resultContainer, _) = calculator.calculate(elements: self.elements)
+        let result = resultContainer?.first!
+
+        XCTAssertEqual(result, "9.99999999998e+23")
     }
 
 }
